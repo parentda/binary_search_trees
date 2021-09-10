@@ -3,6 +3,8 @@
 require_relative 'node'
 
 class Tree
+  attr_accessor :root
+
   def initialize(array)
     @root = build_tree(array)
   end
@@ -30,4 +32,14 @@ class Tree
   def balanced?; end
 
   def rebalance; end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    if node.right
+      pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false)
+    end
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    if node.left
+      pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true)
+    end
+  end
 end
