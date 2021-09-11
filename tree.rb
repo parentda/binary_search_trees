@@ -6,9 +6,7 @@ class Tree
   attr_accessor :root
 
   def initialize(array)
-    sorted_array = array.sort
-    unique_array = sorted_array.uniq
-    @root = build_tree(unique_array)
+    @root = build_tree(clean_array(array))
   end
 
   def build_tree(array)
@@ -21,6 +19,10 @@ class Tree
     node.right = build_tree(array.slice(mid_index + 1..-1))
 
     node
+  end
+
+  def clean_array(array)
+    array.sort.uniq
   end
 
   def insert(value); end
