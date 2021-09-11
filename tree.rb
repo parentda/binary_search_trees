@@ -31,7 +31,19 @@ class Tree
 
   def find(value); end
 
-  def level_order; end
+  def level_order
+    output = []
+    queue = [] << @root
+
+    until queue.empty?
+      node = queue.shift
+      output << node.data
+      queue << node.left unless node.left.nil?
+      queue << node.right unless node.right.nil?
+    end
+
+    output
+  end
 
   def inorder(output = nil); end
 
