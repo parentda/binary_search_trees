@@ -6,10 +6,22 @@ class Tree
   attr_accessor :root
 
   def initialize(array)
-    @root = build_tree(array)
+    sorted_array = array.sort
+    unique_array = sorted_array.uniq
+    @root = build_tree(unique_array)
   end
 
-  def build_tree(array); end
+  def build_tree(array)
+    return if array.empty?
+
+    mid_index = (array.size - 1) / 2
+    node = Node.new(array[mid_index])
+
+    node.left = build_tree(array.slice(0...mid_index))
+    node.right = build_tree(array.slice(mid_index + 1..-1))
+
+    node
+  end
 
   def insert(value); end
 
@@ -19,11 +31,11 @@ class Tree
 
   def level_order; end
 
-  def inorder; end
+  def inorder(output = nil); end
 
-  def preorder; end
+  def preorder(output = nil); end
 
-  def postorder; end
+  def postorder(output = nil); end
 
   def height(node); end
 
