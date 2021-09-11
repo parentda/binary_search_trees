@@ -16,7 +16,7 @@ class Tree
     node = Node.new(array[mid_index])
 
     node.left = build_tree(array.slice(0...mid_index))
-    node.right = build_tree(array.slice(mid_index + 1..-1))
+    node.right = build_tree(array.slice((mid_index + 1)..-1))
 
     node
   end
@@ -45,11 +45,35 @@ class Tree
     output
   end
 
-  def inorder(output = nil); end
+  def inorder(node = @root, output = [])
+    return if node.nil?
 
-  def preorder(output = nil); end
+    inorder(node.left, output)
+    output << node.data
+    inorder(node.right, output)
 
-  def postorder(output = nil); end
+    output
+  end
+
+  def preorder(node = @root, output = [])
+    return if node.nil?
+
+    output << node.data
+    preorder(node.left, output)
+    preorder(node.right, output)
+
+    output
+  end
+
+  def postorder(node = @root, output = [])
+    return if node.nil?
+
+    postorder(node.left, output)
+    postorder(node.right, output)
+    output << node.data
+
+    output
+  end
 
   def height(node); end
 
@@ -69,3 +93,6 @@ class Tree
     end
   end
 end
+
+@tree =
+  Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 2, 0, 10, 6, 6.5])
