@@ -5,7 +5,7 @@ require_relative 'node'
 class Tree
   attr_accessor :root
 
-  def initialize(array)
+  def initialize(array = [])
     @root = build_tree(clean_array(array))
   end
 
@@ -25,7 +25,16 @@ class Tree
     array.sort.uniq
   end
 
-  def insert(value); end
+  def insert(value, node = @root)
+    return @root = Node.new(value) if node.nil?
+    return if node.data == value
+
+    if value < node.data
+      node.left.nil? ? node.left = Node.new(value) : insert(value, node.left)
+    else
+      node.right.nil? ? node.right = Node.new(value) : insert(value, node.right)
+    end
+  end
 
   def delete(value); end
 
