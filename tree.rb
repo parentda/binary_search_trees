@@ -29,7 +29,12 @@ class Tree
 
   def delete(value); end
 
-  def find(value); end
+  def find(value, node = @root)
+    return if node.nil?
+    return node if node.data == value
+
+    value < node.data ? find(value, node.left) : find(value, node.right)
+  end
 
   def level_order
     output = []
