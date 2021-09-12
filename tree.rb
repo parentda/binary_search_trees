@@ -26,17 +26,30 @@ class Tree
   end
 
   def insert(value, node = @root)
-    return @root = Node.new(value) if node.nil?
-    return if node.data == value
+    return @root = Node.new(value) if @root.nil?
+    return Node.new(value) if node.nil?
+    return node if node.data == value
 
     if value < node.data
-      node.left.nil? ? node.left = Node.new(value) : insert(value, node.left)
+      node.left = insert(value, node.left)
     else
-      node.right.nil? ? node.right = Node.new(value) : insert(value, node.right)
+      node.right = insert(value, node.right)
     end
+
+    node
   end
 
-  def delete(value); end
+  def delete(value, node = @root)
+    return if node.nil?
+
+    if value < node.data
+      delete(value, node.left)
+    elsif value > node.data
+      delete(value, node.right)
+    else
+
+    end
+  end
 
   def find(value, node = @root)
     return if node.nil?
