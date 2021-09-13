@@ -25,30 +25,47 @@ class Tree
     array.sort.uniq
   end
 
-  def insert(value, node = @root)
-    return @root = Node.new(value) if @root.nil?
+  def insert(value)
+    @root = insert_recursive(value)
+  end
+
+  def insert_recursive(value, node = @root)
     return Node.new(value) if node.nil?
     return node if node.data == value
 
     if value < node.data
-      node.left = insert(value, node.left)
+      node.left = insert_recursive(value, node.left)
     else
-      node.right = insert(value, node.right)
+      node.right = insert_recursive(value, node.right)
     end
 
     node
   end
 
-  def delete(value, node = @root)
-    return if node.nil?
+  def delete(value)
+    @root = delete_recursive(value)
+  end
+
+  def delete_recursive(value, node = @root)
+    return node if node.nil?
 
     if value < node.data
-      delete(value, node.left)
+      node.left = delete_recursive(value, node.left)
     elsif value > node.data
-      delete(value, node.right)
+      node.right = delete_recursive(value, node.right)
     else
-
+      if node.left.nil?
+        temp = node.right
+        node = nil
+        return temp
+      elsif node.right.nil?
+        temp = node.left
+        node = nil
+        return temp
+      end
     end
+
+    node
   end
 
   def find(value, node = @root)
