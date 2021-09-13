@@ -130,7 +130,16 @@ class Tree
     left_edges > right_edges ? left_edges : right_edges
   end
 
-  def depth(node, edges); end
+  def depth(node = nil, edges = 0, root = @root)
+    return if node.nil?
+    return edges if node.data == root.data
+
+    if node.data < root.data
+      depth(node, edges + 1, root.left)
+    else
+      depth(node, edges + 1, root.right)
+    end
+  end
 
   def balanced?; end
 
