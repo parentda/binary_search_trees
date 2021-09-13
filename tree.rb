@@ -31,11 +31,10 @@ class Tree
 
   def insert_recursive(value, node = @root)
     return Node.new(value) if node.nil?
-    return node if node.data == value
 
     if value < node.data
       node.left = insert_recursive(value, node.left)
-    else
+    elsif value > node.data
       node.right = insert_recursive(value, node.right)
     end
 
