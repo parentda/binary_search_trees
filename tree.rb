@@ -120,9 +120,17 @@ class Tree
     output
   end
 
-  def height(node); end
+  def height(node = @root, edges = 0)
+    return if node.nil?
+    return edges if node.left.nil? && node.right.nil?
 
-  def depth(node); end
+    left_edges = node.left ? height(node.left, edges + 1) : edges
+    right_edges = node.right ? height(node.right, edges + 1) : edges
+
+    left_edges > right_edges ? left_edges : right_edges
+  end
+
+  def depth(node, edges); end
 
   def balanced?; end
 
