@@ -53,17 +53,19 @@ class Tree
     elsif value > node.data
       node.right = delete_recursive(value, node.right)
     else
-      if node.left.nil?
-        temp = node.right
-        node = nil
-        return temp
-      elsif node.right.nil?
-        temp = node.left
-        node = nil
-        return temp
-      end
+      return node.right if node.left.nil?
+      return node.left if node.right.nil?
+
+      node.data = min_node(node.right).data
+
+      node.right = delete_recursive(node.data, node.right)
     end
 
+    node
+  end
+
+  def min_node(node = @root)
+    node = node.left until node.left.nil?
     node
   end
 
