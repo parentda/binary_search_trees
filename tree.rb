@@ -126,14 +126,14 @@ class Tree
     [height(node.left), height(node.right)].max + 1
   end
 
-  def depth(node = nil, edges = 0, root = @root)
+  def depth(node = nil, root = @root)
     return if node.nil?
-    return edges if node.data == root.data
+    return 0 if node.data == root.data
 
     if node.data < root.data
-      depth(node, edges + 1, root.left)
+      depth(node, root.left) + 1
     else
-      depth(node, edges + 1, root.right)
+      depth(node, root.right) + 1
     end
   end
 
