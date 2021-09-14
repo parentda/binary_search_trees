@@ -187,7 +187,11 @@ class Tree
     [left_height, right_height].max + 1
   end
 
-  def rebalance; end
+  def rebalance
+    return if balanced?
+
+    @root = build_tree(inorder)
+  end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     if node.right
@@ -199,31 +203,3 @@ class Tree
     end
   end
 end
-
-@tree =
-  Tree.new(
-    [
-      1,
-      7,
-      4,
-      23,
-      8,
-      9,
-      4,
-      3,
-      5,
-      7,
-      9,
-      67,
-      6345,
-      324,
-      2,
-      0,
-      10,
-      6,
-      6.5,
-      1000,
-      10_000,
-      -1
-    ]
-  )
