@@ -121,8 +121,7 @@ class Tree
   end
 
   def height(node = @root, edges = 0)
-    return if node.nil?
-    return edges if node.left.nil? && node.right.nil?
+    return edges if node.nil? || (node.left.nil? && node.right.nil?)
 
     left_edges = node.left ? height(node.left, edges + 1) : edges
     right_edges = node.right ? height(node.right, edges + 1) : edges
@@ -141,7 +140,13 @@ class Tree
     end
   end
 
-  def balanced?; end
+  def balanced?(node = @root)
+    node.nil? ||
+      (
+        (height(node.left) - height(node.right)).abs <= 1 &&
+          balanced?(node.left) && balanced?(node.right)
+      )
+  end
 
   def rebalance; end
 
@@ -157,4 +162,29 @@ class Tree
 end
 
 @tree =
-  Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 2, 0, 10, 6, 6.5])
+  Tree.new(
+    [
+      1,
+      7,
+      4,
+      23,
+      8,
+      9,
+      4,
+      3,
+      5,
+      7,
+      9,
+      67,
+      6345,
+      324,
+      2,
+      0,
+      10,
+      6,
+      6.5,
+      1000,
+      10_000,
+      -1
+    ]
+  )
