@@ -141,18 +141,32 @@ class Tree
     return true if @root.nil?
 
     queue = [] << @root
-    min_level = 0
-    max_level = Float::INFINITY
+    min_level = Float::INFINITY
+    max_level = -Float::INFINITY
     curr_level = 0
 
     until queue.empty?
-      node = queue.shift
-      output << node.data
-      queue << node.left unless node.left.nil?
-      queue << node.right unless node.right.nil?
+      element_count = queue.size
+      until element_count.zero?
+        node = queue.shift
+        if node.left.nil? && node.right.nil?
+          min_level = curr_level if min_level > curr_level
+          max_level = curr_level if max_level < curr_level
+        else
+          queue << node.left unless node.left.nil?
+          queue << node.right unless node.right.nil?
+        end
+        element_count -= 1
+      end
+      if max_level.integer? && min_level.integer? &&
+           (max_level - min_level).abs > 1
+        return false
+      end
+
+      curr_level += 1
     end
 
-    output
+    true
   end
 
   def balanced_recursive?(node = @root)
