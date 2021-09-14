@@ -120,13 +120,10 @@ class Tree
     output
   end
 
-  def height(node = @root, edges = 0)
-    return edges if node.nil? || (node.left.nil? && node.right.nil?)
+  def height(node = @root)
+    return 0 if node.nil? || (node.left.nil? && node.right.nil?)
 
-    left_edges = node.left ? height(node.left, edges + 1) : edges
-    right_edges = node.right ? height(node.right, edges + 1) : edges
-
-    left_edges > right_edges ? left_edges : right_edges
+    [height(node.left), height(node.right)].max + 1
   end
 
   def depth(node = nil, edges = 0, root = @root)
@@ -140,7 +137,25 @@ class Tree
     end
   end
 
-  def balanced?(node = @root)
+  def balanced?
+    return true if @root.nil?
+
+    queue = [] << @root
+    min_level = 0
+    max_level = Float::INFINITY
+    curr_level = 0
+
+    until queue.empty?
+      node = queue.shift
+      output << node.data
+      queue << node.left unless node.left.nil?
+      queue << node.right unless node.right.nil?
+    end
+
+    output
+  end
+
+  def balanced_recursive?(node = @root)
     node.nil? ||
       (
         (height(node.left) - height(node.right)).abs <= 1 &&
