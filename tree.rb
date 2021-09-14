@@ -170,11 +170,21 @@ class Tree
   end
 
   def balanced_recursive?(node = @root)
-    node.nil? ||
-      (
-        (height(node.left) - height(node.right)).abs <= 1 &&
-          balanced?(node.left) && balanced?(node.right)
-      )
+    balanced_recursive_helper(node) != -1
+  end
+
+  def balanced_recursive_helper(node = @root)
+    return 0 if node.nil?
+
+    left_height = balanced_recursive_helper(node.left)
+    return -1 if left_height == -1
+
+    right_height = balanced_recursive_helper(node.right)
+    return -1 if right_height == -1
+
+    return -1 if (left_height - right_height).abs > 1
+
+    [left_height, right_height].max + 1
   end
 
   def rebalance; end
