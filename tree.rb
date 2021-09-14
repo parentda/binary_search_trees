@@ -203,3 +203,26 @@ class Tree
     end
   end
 end
+
+@tree = Tree.new(Array.new(15) { rand(1..100) })
+@tree.pretty_print
+
+puts "Balanced? #{@tree.balanced?}"
+p "Level-order: #{@tree.level_order}"
+p "Inorder: #{@tree.inorder}"
+p "Preorder: #{@tree.preorder}"
+p "Postorder: #{@tree.postorder}"
+
+5.times { @tree.insert(rand(101..1000)) }
+@tree.pretty_print
+
+puts "Balanced? #{@tree.balanced?}"
+
+@tree.rebalance
+@tree.pretty_print
+
+puts "Balanced? #{@tree.balanced?}"
+p "Level-order: #{@tree.level_order}"
+p "Inorder: #{@tree.inorder}"
+p "Preorder: #{@tree.preorder}"
+p "Postorder: #{@tree.postorder}"
